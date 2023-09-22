@@ -1,5 +1,5 @@
 <div class="full-window settings-page align-items-center">
-    <form id="settings-form" class="row">
+    <form id="settings-form" name="settings-form" class="row">
         <div class="row full-window gutters">
             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
                 <div class="card h-100">
@@ -49,12 +49,18 @@
                                 class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
                             >
                                 <div class="form-group">
+                                    <input
+                                        type="hidden"
+                                        id="application_init"
+                                        name="application_init"
+                                        value="0"
+                                    />
                                     <label for="system-product">제조사</label>
                                     <input
                                         type="text"
                                         class="form-control"
-                                        name="system-product"
-                                        id="system-product"
+                                        name="system_product"
+                                        id="system_product"
                                         placeholder="NBIS"
                                     />
                                 </div>
@@ -63,12 +69,12 @@
                                 class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
                             >
                                 <div class="form-group">
-                                    <label for="system-model">모델명</label>
+                                    <label for="system_model">모델명</label>
                                     <input
                                         type="text"
                                         class="form-control"
-                                        name="system-model"
-                                        id="system-model"
+                                        name="system_model"
+                                        id="system_model"
                                         placeholder="모델명을 입력하세요"
                                     />
                                 </div>
@@ -77,12 +83,12 @@
                                 class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
                             >
                                 <div class="form-group">
-                                    <label for="system-uuid">관리번호</label>
+                                    <label for="system_uuid">관리번호</label>
                                     <input
                                         type="text"
                                         class="form-control"
-                                        name="system-uuid"
-                                        id="system-uuid"
+                                        name="system_uuid"
+                                        id="system_uuid"
                                         placeholder="유효한 관리번호를 입력하세요"
                                     />
                                 </div>
@@ -91,14 +97,14 @@
                                 class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
                             >
                                 <div class="form-group">
-                                    <label for="system-password"
+                                    <label for="system_password"
                                         >관리자 암호</label
                                     >
                                     <input
                                         type="password"
                                         class="form-control"
-                                        name="system-password"
-                                        id="system-password"
+                                        name="system_password"
+                                        id="system_password"
                                         placeholder="관리자 암호를 입력하세요"
                                     />
                                 </div>
@@ -116,12 +122,12 @@
                                 class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
                             >
                                 <div class="form-group">
-                                    <label for="csms-address">연결 주소</label>
+                                    <label for="csms_address">연결 주소</label>
                                     <input
                                         type="url"
                                         class="form-control"
-                                        name="csms-address"
-                                        id="csms-address"
+                                        name="csms_address"
+                                        id="csms_address"
                                         placeholder="운영플랫폼 주소를 입력하세요"
                                     />
                                 </div>
@@ -130,12 +136,12 @@
                                 class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
                             >
                                 <div class="form-group">
-                                    <label for="csms-port">포트번호</label>
+                                    <label for="csms_port">포트번호</label>
                                     <input
                                         type="name"
                                         class="form-control"
-                                        id="csms-port"
-                                        name="csms-port"
+                                        id="csms_port"
+                                        name="csms_port"
                                         placeholder="연결 포트번호를 입력하세요"
                                     />
                                 </div>
@@ -167,12 +173,12 @@
                                 class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
                             >
                                 <div class="form-group">
-                                    <label for="evc-comport">통신포트</label>
+                                    <label for="evc_comport">통신포트</label>
                                     <input
                                         type="text"
                                         class="form-control"
-                                        id="evc-comport"
-                                        name="evc-comport"
+                                        id="evc_comport"
+                                        name="evc_comport"
                                         placeholder="통신포트를 설정해 주세요"
                                     />
                                 </div>
@@ -181,12 +187,12 @@
                                 class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
                             >
                                 <div class="form-group">
-                                    <label for="evc-baudrate">전송속도</label>
+                                    <label for="evc_baudrate">전송속도</label>
                                     <input
                                         type="text"
                                         class="form-control"
-                                        id="evc-baudrate"
-                                        name="evc-baudrate"
+                                        id="evc_baudrate"
+                                        name="evc_baudrate"
                                         placeholder="통신 전송속도를 설정해 주세요"
                                     />
                                 </div>
@@ -209,14 +215,14 @@
                                 class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
                             >
                                 <div class="form-group">
-                                    <label for="evc-monitorperiod"
+                                    <label for="evc_monitorperiod"
                                         >상태보고 주기</label
                                     >
                                     <input
                                         type="text"
                                         class="form-control"
-                                        id="evc-monitorperiod"
-                                        name="evc-monitorperiod"
+                                        id="evc_monitorperiod"
+                                        name="evc_monitorperiod"
                                         placeholder="상태보고 주기를 설정해 주세요"
                                     />
                                 </div>
@@ -225,14 +231,14 @@
                                 class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
                             >
                                 <div class="form-group">
-                                    <label for="evc-watchdogperiod"
+                                    <label for="evc_watchdogperiod"
                                         >WATCHDOG 주기 설정</label
                                     >
                                     <input
                                         type="text"
                                         class="form-control"
-                                        id="evc-watchdogperiod"
-                                        name="evc-watchdogperiod"
+                                        id="evc_watchdogperiod"
+                                        name="evc_watchdogperiod"
                                         placeholder="Watchdog 주기를 설정해 주세요"
                                     />
                                 </div>
@@ -245,7 +251,7 @@
                                 <div class="text-right">
                                     <button
                                         type="button"
-                                        id="submit"
+                                        id="setting-cancel"
                                         name="submit"
                                         class="btn btn-secondary"
                                     >

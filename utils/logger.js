@@ -13,9 +13,10 @@ const { SPLAT } = require("triple-beam");
 const { isObject } = require("lodash");
 const { version } = require("root-require")("package.json");
 const { combine, timestamp, printf, colorize, label, align } = winston.format;
+const { app } = require("electron");
 
 const logPath = process.env["LOG_PATH"];
-const isPackaged = process.env["IS_PACKAGED"];
+const isPackaged = app.isPackaged;
 
 const levels = {
     error: 0,

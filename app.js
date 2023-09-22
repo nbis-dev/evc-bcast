@@ -83,7 +83,7 @@ function openDetachedDevTools() {
     devTools = new BrowserWindow({
         width: 1080,
         height: 1920,
-        show: true,
+        show: false,
         minimizable: false,
         resizable: false,
         closable: false,
@@ -99,10 +99,8 @@ function openDetachedDevTools() {
         devTools.setSize(windowBounds.width / 2, windowBounds.height);
         devTools.setMenu(null);
 
-        // 시작시에 안보이게 한다.
-        // devTools.show();
-        ipc.sendToRenderer("devtool-status", false);
-        ipc.sendToRenderer("app-is-packaged", app.isPackaged);
+        devTools.show();
+        ipc.sendToRenderer("devtool-status", true);
     });
     mainWindow.on("move", function () {
         var windowBounds = mainWindow.getBounds();

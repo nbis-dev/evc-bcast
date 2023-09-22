@@ -5,6 +5,9 @@ const electron = require("electron");
 
 const CAROUSEL_ID = "#page_carousel";
 var mCurrentSlide = 0; // carousel num 0
+var mIsPackaged = false;
+var mSettings = {};
+
 const mPages = [
     "loading-carousel",
     "settings-carousel",
@@ -19,6 +22,7 @@ const PAGES = {
 };
 
 $(async () => {
+    isAppPackaged();
     $("#page_carousel").carousel({
         pause: true,
         interval: false,
@@ -33,7 +37,6 @@ $(async () => {
                 funcName.charAt(0).toUpperCase() +
                 funcName.slice(1) +
                 "Pages";
-            console.log(funcName);
             window[funcName]();
         });
     }
@@ -49,28 +52,24 @@ const onReceiveSettings = (payload) => {
         return;
     }
 
-    mSettings = {};
     for (var idx in payload.data) {
         mSettings[
-            `${payload.data[idx].category}-${payload.data[idx].attribute}`
+            `${payload.data[idx].category}_${payload.data[idx].attribute}`
         ] = payload.data[idx].value;
     }
-    if (mCurrentSlide === 0) {
+
+    if (mCurrentSlide === 0 && mSettings.application_init === "0") {
         setTimeout(() => {
             showInitSettingsAlert();
         }, 2500);
         setTimeout(() => {
             $(CAROUSEL_ID).carousel(PAGES.SETTINGS);
-        }, 3000);
+        }, 2500);
     }
 };
 
 const onAppIsPackaged = (isPackaged) => {
-    if (!isPackaged) {
-        $("#show_devtool_div").show();
-    } else {
-        $("#show_devtool_div").hide();
-    }
+    mIsPackaged = isPackaged;
 };
 const onDevtoolStatusChanged = (isShow) => {
     var checkValue = $('input:checkbox[name="devtool_checkbox"]').is(
@@ -81,8 +80,17 @@ const onDevtoolStatusChanged = (isShow) => {
     }
 };
 
-$(CAROUSEL_ID).on("slide.bs.carousel", (e) => {
+$(CAROUSEL_ID).on("slid.bs.carousel", (e) => {
     var slideFrom = $(this).find(".active").index();
     var slideTo = $(e.relatedTarget).index();
     mCurrentSlide = slideTo;
+
+    var name = mPages[mCurrentSlide].split("-")[0];
+    var funcName = mPages[mCurrentSlide].split("-")[0];
+    funcName =
+        "load" +
+        funcName.charAt(0).toUpperCase() +
+        funcName.slice(1) +
+        "Completed";
+    window[funcName]();
 });

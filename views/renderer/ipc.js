@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Renderer main process
  */
@@ -26,6 +27,9 @@ const setDevToolsView = (isShow) => {
     ipcRenderer.send("devtool-control", isShow);
 };
 
+const isAppPackaged = async () => {
+    ipcRenderer.send("app-is-packaged", null);
+};
 const getSettings = async (cmd, data) => {
     ipcRenderer.send("system-settings", Object.assign({ cmd: cmd }, data));
 };

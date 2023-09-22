@@ -1,3 +1,4 @@
+"use strict";
 function showProcessingPage(msg) {
     $.blockUI({
         message: !msg

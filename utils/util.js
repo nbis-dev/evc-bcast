@@ -1,34 +1,4 @@
-const os = require("os");
-
-var msgId = 0;
-
-const getNetworkInterfaces = () => {
-    const list = [];
-    const interfaces = os.networkInterfaces();
-    for (let iface in interfaces) {
-        for (let i in interfaces[iface]) {
-            const f = interfaces[iface][i];
-            if (f.family === "IPv4") {
-                if (f.internal) {
-                    list.unshift({ f, iface });
-                } else {
-                    list.push({ f, iface });
-                }
-            }
-        }
-    }
-
-    return list;
-};
-
-const SerialPort = require("serialport").SerialPort;
-
-const getAvalableSerialPorts = async () => {
-    const ports = await SerialPort.list();
-    return ports;
-};
-
-const isNullObject = (obj) => {
+module.exports.isNullObject = (obj) => {
     return obj === null || obj === undefined;
 };
 
@@ -160,21 +130,21 @@ if (!String.prototype.endsWith) {
     })();
 }
 
-function isObject(obj) {
+module.exports.isObject = (obj) => {
     var type = typeof obj;
     return type === "function" || (type === "object" && !!obj);
-}
+};
 
-function cloneObject(src) {
+module.exports.cloneObject = (src) => {
     return JSON.parse(JSON.stringify(src));
-}
+};
 
-function isEmptyObject(obj) {
+module.exports.isEmptyObject = (obj) => {
     for (var key in obj) {
         if (obj.hasOwnProperty(key)) return false;
     }
     return true;
-}
+};
 if (!String.prototype.replaceAll) {
     String.prototype.replaceAll = function (search, replacement) {
         var target = this;
@@ -191,34 +161,3 @@ if (!String.prototype.format) {
         return formatted;
     };
 }
-
-const scrollToBottom = (id) => {
-    const element = document.getElementById(id);
-    element.scrollTop = element.scrollHeight;
-};
-
-const scrollToTop = (id) => {
-    const element = document.getElementById(id);
-    element.scrollTop = 0;
-};
-
-// Require jQuery
-const scrollSmoothlyToBottom = (id) => {
-    const element = $(`#${id}`);
-    element.animate(
-        {
-            scrollTop: element.prop("scrollHeight"),
-        },
-        500
-    );
-};
-
-// Require jQuery
-const scrollSmoothlyToTop = (id) => {
-    $(`#${id}`).animate(
-        {
-            scrollTop: 0,
-        },
-        500
-    );
-};

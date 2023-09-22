@@ -1,0 +1,404 @@
+/*================================================================================
+    Item Name: Frest HTML Admin Template
+    Version: 1.0
+    Author: PIXINVENT
+    Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+@import url(./notosanskr.css);
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    font-size: 13px;
+    overflow-y: auto;
+    background: #1a233a;
+}
+.full-window {
+    width: 100%;
+    height: 100%;
+    font-size: 13px;
+    overflow-y: auto;
+}
+
+.header-navbar,
+.navigation,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+small,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+.table,
+.table th,
+.table td,
+.tooltip,
+.list-group-item,
+.popover {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+label {
+    font-size: 1rem;
+}
+
+.modal .modal-content .modal-header .modal-title {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+.bottom-align-btn {
+    position: absolute;
+    display: inline-block;
+    bottom: 0px;
+    right: 10px;
+}
+
+.separator {
+    height: 0;
+    margin: 15px 0;
+    margin-left: -1.7rem;
+    margin-right: -1.7rem;
+    border-bottom: 1px solid #ebedf2;
+}
+
+.hide {
+    display: none !important;
+}
+
+#device_list {
+    position: relative;
+    height: 100%;
+    padding-right: 1rem;
+}
+
+.table td {
+    padding: 0.5rem;
+}
+
+.btn-toolbar .btn {
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+.btn-circle.btn-sm {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    box-shadow: 2px 1px 1px #2c2b2b;
+    padding: 0px 5px;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    font-size: 20px;
+    text-align: center;
+}
+.btn-circle.btn-md {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    box-shadow: 3px 3px 1px #2c2b2b;
+    padding: 0px 7px;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    font-size: 30px;
+    text-align: center;
+}
+.btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    box-shadow: 5px 5px 2px #2c2b2b;
+    padding: 10px 10px;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    font-size: 40px;
+    text-align: center;
+}
+
+.btn-floating-bottom {
+    z-index: 10000;
+    position: fixed;
+    left: 240px;
+    bottom: 20px;
+}
+
+.list-background-image {
+    background: rgba(255, 255, 255, 0.1) url("../images/list_background.png")
+        bottom left no-repeat;
+}
+
+table {
+    border-collapse: collapse;
+    font-size: 12pt;
+    table-layout: fixed;
+}
+
+td {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.tableFixHead {
+    overflow-y: scroll;
+    height: 670px;
+}
+
+.tableFixHead thead th {
+    text-align: center;
+    position: sticky;
+    top: 0;
+}
+
+.td-center {
+    text-align: center;
+}
+.td-left {
+    text-align: left;
+    padding-left: 10px;
+}
+.td-right {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.tr-send {
+    color: red;
+    background-color: #ebf5c2;
+    filter: alpha(opacity=60);
+    -moz-opacity: 0.6; /* Mozilla */
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+}
+.tr-receive {
+    color: black;
+    background-color: #ffffff;
+    filter: alpha(opacity=60);
+    -moz-opacity: 0.6; /* Mozilla */
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+}
+
+/* loading page  */
+.loading-page {
+    margin: 0;
+    padding: 0;
+    /* display: flex; */
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    height: 100vh;
+    background-size: cover;
+    background: url("../images/evc-app/electric-world.webp");
+}
+
+div.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80%;
+}
+div.loading-div {
+    width: 6vw;
+    height: 6vw;
+    border-radius: 100%;
+    margin: 4vw;
+    background-image: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    animation: bounce 1.5s 0.5s linear infinite;
+}
+.loading-yellow {
+    background-color: var(--yellow);
+}
+
+.loading-red {
+    background-color: var(--red);
+    animation-delay: 0.1s;
+}
+
+.loading-blue {
+    background-color: var(--blue);
+    animation-delay: 0.2s;
+}
+
+.loading-green {
+    background-color: var(--green);
+    animation-delay: 0.3s;
+}
+
+@keyframes bounce {
+    0%,
+    50%,
+    100% {
+        transform: scale(1);
+        filter: blur(0px);
+    }
+    25% {
+        transform: scale(0.6);
+        filter: blur(3px);
+    }
+    75% {
+        filter: blur(3px);
+        transform: scale(1.4);
+    }
+}
+
+.zindex-container {
+    position: relative;
+    text-align: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.zindex-top {
+    position: absolute;
+    z-index: 1000;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+    height: 60%;
+    margin: 10rem 0;
+    overflow: hidden;
+    background: url("../images/evc-app/rainbow-gradient-background.png")
+        no-repeat center center;
+    background-size: auto 100%;
+}
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.loading-logo-img {
+    margin-top: 10rem;
+    margin-left: 15rem;
+    transform: scale(0.5);
+}
+
+.loading-text-container span {
+    display: block;
+}
+
+.loading-text-default {
+    color: white;
+    font-size: 5rem;
+    font-weight: 900;
+    letter-spacing: 1rem;
+    /* background: yellowgreen; */
+    position: relative;
+    animation: loading-text-animation 3s 1;
+}
+
+.loading-text-second {
+    margin-top: 1rem;
+    font-size: 4rem;
+    font-weight: 600;
+    margin-bottom: 10rem;
+    color: rgb(13, 29, 13);
+    /* font-family: Georgia, serif; */
+}
+
+@keyframes loading-text-animation {
+    0% {
+        color: black;
+        margin-bottom: -30px;
+    }
+
+    30% {
+        letter-spacing: 25px;
+        margin-bottom: -30px;
+    }
+
+    85% {
+        letter-spacing: 8px;
+        margin-bottom: -30px;
+    }
+}
+
+/* settings page  */
+.settings-page {
+    padding: 4% 7%;
+    padding-top: 50px;
+    color: #bcd0f7;
+    background: #1a233a;
+}
+.evc-settings .user-profile {
+    margin: 0 0 1rem 0;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+.evc-settings .user-profile .user-avatar {
+    margin: 0 0 1rem 0;
+}
+.evc-settings .user-profile .user-avatar img {
+    width: 90px;
+    height: 90px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
+}
+.evc-settings .user-profile h5.user-name {
+    margin: 0 0 0.5rem 0;
+}
+.evc-settings .user-profile h6.user-email {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 400;
+}
+.evc-settings .about {
+    margin: 1rem 0 0 0;
+    font-size: 0.8rem;
+    text-align: center;
+}
+.card {
+    background: #272e48;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 0;
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    margin: 1rem 0 0 0;
+    font-size: 0.8rem;
+}
+
+.form-control {
+    border: 1px solid #596280;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    font-size: 0.825rem;
+    background: #1a233a;
+    color: #bcd0f7;
+}
+
+/* change transition duration to control the speed of fade effect */
+.carousel-item {
+    transition: transform 0s ease-in-out;
+}
+
+.carousel-fade .active.carousel-item-start,
+.carousel-fade .active.carousel-item-end {
+    transition: opacity 0s 2.6s;
+}

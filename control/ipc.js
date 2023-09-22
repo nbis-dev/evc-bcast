@@ -6,8 +6,9 @@
 
 const { ipcMain } = require("electron");
 const logger = require("../utils/logger");
-const eventEmitter = require("./event-emitter");
+const util = require("../utils/util");
 const model = require("../model");
+const eventEmitter = require("./event-emitter");
 const TAG = "[IPC-MAIN]";
 
 // ipcMain에서의 이벤트 수신
@@ -21,35 +22,15 @@ ipcMain.on("eis-config", async (evt, recvPayload) => {
 
     switch (recvPayload.cmd) {
         case "GET": {
-            res = await model.getRegisteredSystems();
-            if (res.success) {
-                payload.data = res.data;
-            } else {
-                payload.resCode = 500;
-            }
             break;
         }
         case "DELETE": {
-            res = await model.deleteRegisteredSystem(recvPayload.system);
             break;
         }
         case "POST": {
             break;
         }
         case "PUT": {
-            if (recvPayload.type === "EIS-DEFAULT") {
-                // 진행중인 시뮬레이션 중지 필요
-                res = await model.changeDefaultDevice(
-                    recvPayload.sys_id,
-                    recvPayload.id
-                );
-
-                res.data = {
-                    type: recvPayload.type,
-                    sys_id: recvPayload.sys_id,
-                    id: recvPayload.id,
-                };
-            }
             break;
         }
         default: {
@@ -67,24 +48,36 @@ ipcMain.on("eis-config", async (evt, recvPayload) => {
     evt.reply("eis-config", payload);
 });
 
-ipcMain.on("eis-simulator", (evt, payload) => {
-    logger.info(TAG, "eis-simulator received =", payload);
-    eventEmitter.emit("eis-simulator", payload);
+ipcMain.on("devtool-control", (evt, isShow) => {
+    logger.info(TAG, "devtool-control received =", isShow);
+    if (isShow) {
+        devTools.show();
+        mainWindow.webContents.send("devtool-status", true);
+    } else {
+        devTools.hide();
+        mainWindow.webContents.send("devtool-status", false);
+    }
 });
 
-ipcMain.on("devtool-control", (evt, payload) => {
-    logger.info(TAG, "devtool-control received =", payload);
-    eventEmitter.emit("devtool-control", payload);
+ipcMain.on("system-settings", async (evt, payload) => {
+    logger.info(TAG, "system-settings ipc received =", payload);
+    const result = await model.settings(payload);
+    mainWindow.webContents.send("system-settings", result);
 });
 
 var mainWindow = null;
-module.exports.sendToRenderer = function sendToRenderer(channel, payload) {
+var devTools = null;
+// for devtool control
+module.exports.sendToRenderer = (channel, payload) => {
     if (!mainWindow) {
         return;
     }
-    mainWindow.webContents.send(channel, payload);
+    try {
+        mainWindow.webContents.send(channel, payload);
+    } catch (e) {}
 };
 
-module.exports.setMainWindow = function setMainWindow(win) {
-    mainWindow = win;
+module.exports.setWindow = (main, dev) => {
+    mainWindow = main;
+    devTools = dev;
 };

@@ -1,5 +1,4 @@
 function showProcessingPage(msg) {
-    console.log("xxxx");
     $.blockUI({
         message: !msg
             ? '<div class="spinner-border text-primary mr-1" role="status"><span class="sr-only">Loading...</span></div> 데이터를 불러 오는 중입니다'

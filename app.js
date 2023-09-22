@@ -1,4 +1,10 @@
-const { app, BrowserWindow, ipcMain, dialog } = require("electron");
+const {
+    app,
+    BrowserWindow,
+    ipcMain,
+    dialog,
+    globalShortcut,
+} = require("electron");
 const path = require("path");
 const fs = require("fs");
 
@@ -6,8 +12,8 @@ const logPath = path.join(app.getPath("userData"), "logs");
 if (!fs.existsSync(logPath)) {
     fs.mkdirSync(logPath, { recursive: true });
 }
+
 const dbDir = path.join(app.getPath("userData"), "data");
-console.log(dbDir)
 if (!fs.existsSync(dbDir)) {
     fs.mkdirSync(dbDir, { recursive: true });
 }
@@ -18,11 +24,11 @@ process.env["DB_PATH"] = dbDir;
 process.env["IS_PACKAGED"] = app.isPackaged;
 
 const logger = require("./utils/logger");
-require("./model");
 const ipc = require("./control/ipc.js");
+require("./model");
+
 // for devtool control
 const eventEmitter = require("./control/event-emitter");
-require("./simulator");
 
 const TAG = "[APP]";
 logger.info(TAG, "\n\n\n\n\n\nAPP Started. isPackaged =", app.isPackaged);
@@ -32,20 +38,21 @@ var mainWindow = null;
 
 const createWindow = () => {
     mainWindow = new BrowserWindow({
-        title: "KTCS-3 EIS Simulator",
-        width: 1360,
-        height: 755,
+        title: "NBIS EVC Interface Simulator",
+        width: 1080,
+        height: 1920,
+        alwaysOnTop: app.isPackaged,
+        fullscreen: app.isPackaged,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
             enableRemoteModule: true,
             preload: path.join(__dirname, "control", "preload.js"),
             // contextIsolation: true,
-            devTools: true, // 다른 브라우저 창으로 띄운다.
+            devTools: !app.isPackaged, // 다른 브라우저 창으로 띄운다.
         },
         resizable: false,
     });
-    ipc.setMainWindow(mainWindow);
 
     mainWindow.loadFile(path.join(__dirname, "views", "index.html"));
     // win.setMenuBarVisibility(false);
@@ -58,21 +65,25 @@ const createWindow = () => {
         }
         if (process.platform !== "darwin") {
             app.quit();
+            app.exit();
         }
     });
 
     // Renderer는 dev tool을 기본 로그뷰어로 한다.
     // 다른 창으로 띄워지도록 처리한다.
-    openDetachedDevTools();
+    if (!app.isPackaged) {
+        openDetachedDevTools();
+    }
+    ipc.setWindow(mainWindow, devTools);
 };
 
 // devtools open-close
 function openDetachedDevTools() {
     logger.info(TAG, "openDetachedDevTools() called !!");
     devTools = new BrowserWindow({
-        width: 600,
-        height: 760,
-        show: false,
+        width: 1080,
+        height: 1920,
+        show: true,
         minimizable: false,
         resizable: false,
         closable: false,
@@ -90,7 +101,8 @@ function openDetachedDevTools() {
 
         // 시작시에 안보이게 한다.
         // devTools.show();
-        ipc.sendToRenderer("devtool-status", "closed");
+        ipc.sendToRenderer("devtool-status", false);
+        ipc.sendToRenderer("app-is-packaged", app.isPackaged);
     });
     mainWindow.on("move", function () {
         var windowBounds = mainWindow.getBounds();
@@ -102,42 +114,32 @@ function openDetachedDevTools() {
 
     devTools.on("closed", () => {
         devTools = null;
-        ipc.sendToRenderer("devtool-status", "closed");
+        ipc.sendToRenderer("devtool-status", false);
     });
 }
 
-// for devtool control
-eventEmitter.on("devtool-control", (evt) => {
-    if (evt) {
-        if (evt.show) {
-            devTools.show();
-            ipc.sendToRenderer("devtool-status", "opened");
-        } else {
-            devTools.hide();
-            ipc.sendToRenderer("devtool-status", "opened");
-        }
-    } else {
-        logger.warn(TAG, "devtool-control received unknown control");
-    }
-});
-
 app.whenReady().then(() => {
     createWindow();
-    ipcMain.handle("dialog", (event, method, params) => {
-        dialog[method](params);
-    });
     app.on("activate", () => {
         if (BrowserWindow.getAllWindows().length === 0) {
             createWindow();
+        }
+    });
+    globalShortcut.register("Control+Shift+L+", () => {
+        if (mainWindow.isFullScreen()) {
+            mainWindow.setFullScreen(false);
+        } else {
+            mainWindow.setFullScreen(true);
         }
     });
 });
 
 app.on("window-all-closed", () => {
     if (devTools) {
-        demvTools.close();
+        devTools.close();
     }
     if (process.platform !== "darwin") {
         app.quit();
+        app.exit();
     }
 });
